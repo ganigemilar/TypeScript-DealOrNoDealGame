@@ -96,7 +96,7 @@ export class GameServiceImpl implements GameService {
         this.bankerActivity.onOffering();
     }
 
-    eliminateBriefcase(numberBriefcase: Briefcase): Briefcase {
+    eliminateBriefcase(numberBriefcase: number): Briefcase {
         return null;
     }
 }
