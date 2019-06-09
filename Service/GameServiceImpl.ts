@@ -64,7 +64,7 @@ export class GameServiceImpl implements GameService {
             this.playerActivity.onEliminateBriefcase();
         }
         //TODO : act offering by banker();
-        this.offeringByBanker()
+        this.offeringByBanker(null, null);
     }
 
     end(): void {
