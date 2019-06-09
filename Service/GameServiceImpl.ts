@@ -28,18 +28,24 @@ export class GameServiceImpl implements GameService {
         this.banker.fullname = "Banker COY";
 
         this.score = new Score();
+
+        this.player = new Player();
+
+        //TODO : give player name ()
     }
 
     start(): void {
         this.isOnPlaying = true;
         if (!this.isAlreadyRunning) {
             this.generateBriefcase();
-            this.isAlreadyRunning = true;   
+            this.isAlreadyRunning = true;
+            this.update();   
         }
     }
 
     update(): void {
-
+        //TODO : act choose briefcase()
+        
     }
 
     end(): void {
