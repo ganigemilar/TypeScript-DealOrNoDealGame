@@ -3,6 +3,9 @@ import { Briefcase } from "../Object/Briefcase";
 import { Banker } from "../Object/Banker";
 import { Score } from "../Object/Score";
 import { Player } from "../Object/Player";
+import { GameActivity } from "./GameActivity";
+import { PlayerActivity } from "./PlayerActivity";
+import { BankerActivity } from "./BankerActivity";
 
 export class GameServiceImpl implements GameService {
     listBriefCase: Briefcase[];
@@ -16,6 +19,10 @@ export class GameServiceImpl implements GameService {
     private limitChoose: number = 6;
     private isAlreadyRunning: boolean;
     readonly TOTAL_BRIEFCASE: number = 22;
+
+    gameActivity: GameActivity;
+    playerActivity: PlayerActivity;
+    bankerActivity: BankerActivity;
 
     constructor() {
         this.setup();
@@ -31,21 +38,33 @@ export class GameServiceImpl implements GameService {
 
         this.player = new Player();
 
-        //TODO : give player name ()
+        //TODO : onSetup activity()
+        this.gameActivity.onSetup();
+
+        //TODO : give player name()
+        this.playerActivity.onGivePlayerName();
     }
 
     start(): void {
         this.isOnPlaying = true;
         if (!this.isAlreadyRunning) {
+            //TODO : onStart()
+            this.gameActivity.onStart();
             this.generateBriefcase();
             this.isAlreadyRunning = true;
+            //TODO : act choose briefcase for player()
+            this.playerActivity.onChooseBriefcase();
             this.update();   
         }
     }
 
     update(): void {
-        //TODO : act choose briefcase()
-        
+        for (let i = this.limitChoose; i > 0; i--) {
+            //TODO : act eliminate briefcase()
+            this.playerActivity.onEliminateBriefcase();
+        }
+        //TODO : act offering by banker();
+        this.offeringByBanker()
     }
 
     end(): void {
@@ -71,5 +90,13 @@ export class GameServiceImpl implements GameService {
             listBriefCase[i] = movedBriefcase;
             listBriefCase[newIndex] = currentBriefcase;
         }
+    }
+
+    private offeringByBanker(playerBriefcase: Briefcase, currentEliminateBriefcases: Briefcase[]) {
+        this.bankerActivity.onOffering();
+    }
+
+    eliminateBriefcase(numberBriefcase: Briefcase): Briefcase {
+        return null;
     }
 }
