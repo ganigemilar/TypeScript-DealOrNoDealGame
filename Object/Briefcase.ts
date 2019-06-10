@@ -3,7 +3,7 @@ import { GameObject } from "./GameObject";
 export class Briefcase extends GameObject {
     id: number;
     money: number;
-    isOpen: boolean;
+    isOpen: boolean = false;
 
     constructor(id: number, money: number = 0) {
         super();

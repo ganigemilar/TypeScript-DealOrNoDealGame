@@ -8,7 +8,7 @@ export class TestGame extends DealOrNoDealGameService {
     }    
     
     onGivePlayerName(fullname?: string): string {
-        return "Gani Gemilar";
+        return "GG COY";
     }
     
     onChooseBriefcase(briefcaseNumber?: number): number {
@@ -28,7 +28,12 @@ export class TestGame extends DealOrNoDealGameService {
     }
     
     onGetOfferingByBanker(offering: number): void {
-        console.log("Offering Banker : ${offering}");
+        let msg: string = `Offering Banker : ${ offering }`;
+        console.log(msg);
+    }
+
+    onFinish(): void {
+        console.log("FINISH!!!!!!!");
     }
 }
 
