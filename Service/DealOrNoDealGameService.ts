@@ -51,11 +51,13 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     }
     
     onUpdate(): void {
+        this.printInfo();
+        
         this.isOnPlaying = true;
 
         //First time to get briefcase
         if (!this.playerBriefcase) {
-            this.playerBriefcase = this.listBriefcases[this.onChooseBriefcase()];
+            this.playerBriefcase = this.giveBriefcase(this.onChooseBriefcase());
         }
 
         //Eliminate briefcase
@@ -130,7 +132,8 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     private giveBriefcase(numberBriefcase: number): Briefcase {
         for (let briefcase of this.listBriefcases) {
             if ((<Briefcase> briefcase).id == numberBriefcase) {
-                if ((<Briefcase> briefcase).isOpen) {
+                if (!(<Briefcase> briefcase).isOpen) {
+                    briefcase.isOpen = true;
                     return briefcase;
                 }
             }
@@ -140,5 +143,9 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
 
     startGame(): void {
         this.onStart();
+    }
+
+    private printInfo(): void {
+        console.log(this);
     }
 }
