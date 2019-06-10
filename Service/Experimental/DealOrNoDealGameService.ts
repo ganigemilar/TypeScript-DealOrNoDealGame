@@ -1,12 +1,16 @@
-import { GameActivity } from "./GameActivity";
-import { PlayerActivity } from "./PlayerActivity";
-import { BankerActivity } from "./BankerActivity";
-import { Briefcase } from "../Object/Briefcase";
-import { Player } from "../Object/Player";
-import { Banker } from "../Object/Banker";
-import { Score } from "../Object/Score";
+import { GameActivity } from "../GameActivity";
+import { PlayerActivity } from "../PlayerActivity";
+import { BankerActivity } from "../BankerActivity";
+import { Briefcase } from "../../Object/Briefcase";
+import { Player } from "../../Object/Player";
+import { Banker } from "../../Object/Banker";
+import { Score } from "../../Object/Score";
 
 export abstract class DealOrNoDealGameService implements GameActivity, PlayerActivity, BankerActivity {
+    playerActivity: PlayerActivity;
+    bankerActivity: BankerActivity;
+    gameActivity: GameActivity;
+
     listBriefcases: Briefcase[] = [];
     player: Player;    
     playerBriefcase: Briefcase;
@@ -16,22 +20,20 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     private round: number = 1;
     private isOnPlaying: boolean;
     private limitChoose: number = 6;
+    private isAlreadyRunning: boolean;
     private isLastRound: boolean;
     
     readonly TOTAL_BRIEFCASE: number = 22;
-
-    //Player Activity
-    abstract onGivePlayerName(fullname?: string): string;
-    abstract onChooseBriefcase(briefcaseNumber?: number): number;
-    abstract onEliminateBriefcase(briefcaseNumber?: number): number;
-    abstract onSkipOfferingBanker(isAcceptOffering?: boolean): boolean;
-    abstract onGetOfferingByBanker(offering: number): void;
 
     constructor() {
         this.onSetup();
     }
 
     onSetup(): void {
+        //this.gameActivity.onSetup();
+        
+        //this.listBriefcases = new Briefcase[this.TOTAL_BRIEFCASE];
+        
         this.player = new Player();
         this.player.fullname = this.onGivePlayerName("GGWP Player");
 
@@ -81,18 +83,25 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
             this.isLastRound = true; 
         }
 
+        //this.gameActivity.onUpdate();
+
         if (this.isOnPlaying) {
             this.onUpdate();
         }
     }
     
     onFinish(): void {
-        
+        //this.gameActivity.onFinish();
     }
 
-    onInterrupt(): void {
+    abstract onInterrupt(): void;
 
-    }
+    //Player Activity
+    abstract onGivePlayerName(fullname?: string): string;
+    abstract onChooseBriefcase(briefcaseNumber?: number): number;
+    abstract onEliminateBriefcase(briefcaseNumber?: number): number;
+    abstract onSkipOfferingBanker(isAcceptOffering?: boolean): boolean;
+    abstract onGetOfferingByBanker(offering: number): void;
 
     //Banker Activity
     onOffering(playerBriefcase: Briefcase, eliminateBriefcases: Briefcase[]): number {

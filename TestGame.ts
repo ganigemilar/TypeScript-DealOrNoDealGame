@@ -1,4 +1,4 @@
-import { DealOrNoDealGameService } from "./Service/DealOrNoDealGameService";
+import { DealOrNoDealGameService } from "./Service/Experimental/DealOrNoDealGameService";
 import { Briefcase } from "./Object/Briefcase";
 
 export class TestGame extends DealOrNoDealGameService {
