@@ -17,10 +17,12 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     banker: Banker;
     score: Score;
 
-    readonly round: number = 1;
+    private round: number = 1;
     private isOnPlaying: boolean;
-    readonly limitChoose: number = 6;
+    private limitChoose: number = 6;
     private isAlreadyRunning: boolean;
+    private isLastRound: boolean;
+    
     readonly TOTAL_BRIEFCASE: number = 22;
 
     constructor() {
@@ -44,23 +46,50 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     }    
     
     onStart(): void {
-        this.gameActivity.onStart();
+        //this.gameActivity.onStart();
         this.onUpdate();
     }
     
     onUpdate(): void {
-        let choosedBriefcases: Briefcase[];
-        for (let i = this.limitChoose; i > 0; i--) {
-            choosedBriefcases.push(this.giveBriefcase(this.onChooseBriefcase()));
+        this.isOnPlaying = true;
+
+        //First time to get briefcase
+        if (!this.playerBriefcase) {
+            this.playerBriefcase = this.listBriefcases[this.onChooseBriefcase()];
         }
 
-        
+        //Eliminate briefcase
+        let choosedBriefcases: Briefcase[];
+        for (let i = this.limitChoose; i > 0; i--) {
+            choosedBriefcases.push(this.giveBriefcase(this.onEliminateBriefcase()));
+        }
 
-        this.gameActivity.onUpdate();
+        let bankerOffer = this.onOffering(this.playerBriefcase, choosedBriefcases);
+        this.onGetOfferingByBanker(bankerOffer);
+        this.onSkipOfferingBanker();
+
+        this.onInterrupt();
+
+        this.round++;
+        if (this.limitChoose - 1 > 0) {
+            this.limitChoose--;
+            this.isLastRound = true;
+        } else {
+            if (this.isLastRound) {
+                this.isOnPlaying = false;
+                this.onFinish();
+            } 
+        }
+
+        //this.gameActivity.onUpdate();
+
+        if (this.isOnPlaying) {
+            this.onUpdate();
+        }
     }
     
     onFinish(): void {
-        this.gameActivity.onFinish();
+        //this.gameActivity.onFinish();
     }
 
     abstract onInterrupt(): void;
@@ -70,10 +99,11 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     abstract onChooseBriefcase(briefcaseNumber?: number): number;
     abstract onEliminateBriefcase(briefcaseNumber?: number): number;
     abstract onSkipOfferingBanker(isAcceptOffering?: boolean): boolean;
+    abstract onGetOfferingByBanker(offering: number): void;
 
     //Banker Activity
     onOffering(playerBriefcase: Briefcase, eliminateBriefcases: Briefcase[]): number {
-        return 0;
+        return 696969696969;
     }
 
     private generateBriefcase(): void {

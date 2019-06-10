@@ -3,4 +3,5 @@ export interface PlayerActivity {
     onChooseBriefcase(briefcaseNumber: number): number;
     onEliminateBriefcase(briefcaseNumber: number): number;
     onSkipOfferingBanker(isAcceptOffering: boolean): boolean;
+    onGetOfferingByBanker(offering: number): void;
 }
