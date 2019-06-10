@@ -1,6 +1,6 @@
 export interface PlayerActivity {
-    onGivePlayerName(): void;
-    onChooseBriefcase(): void;
-    onEliminateBriefcase(): void;
-    onSkipOfferingBanker(): void;
+    onGivePlayerName(fullname: string): string;
+    onChooseBriefcase(briefcaseNumber: number): number;
+    onEliminateBriefcase(briefcaseNumber: number): number;
+    onSkipOfferingBanker(isAcceptOffering: boolean): boolean;
 }

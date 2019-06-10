@@ -1,7 +1,7 @@
-import { Briefcase } from "../Object/Briefcase";
-import { Banker } from "../Object/Banker";
-import { Score } from "../Object/Score";
-import { Player } from "../Object/Player";
+import { Briefcase } from "../../Object/Briefcase";
+import { Banker } from "../../Object/Banker";
+import { Score } from "../../Object/Score";
+import { Player } from "../../Object/Player";
 
 export interface GameService {
     listBriefCase: Briefcase[];

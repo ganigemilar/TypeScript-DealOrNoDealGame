@@ -1,11 +1,11 @@
 import { GameService } from "./GameService";
-import { Briefcase } from "../Object/Briefcase";
-import { Banker } from "../Object/Banker";
-import { Score } from "../Object/Score";
-import { Player } from "../Object/Player";
-import { GameActivity } from "./GameActivity";
-import { PlayerActivity } from "./PlayerActivity";
-import { BankerActivity } from "./BankerActivity";
+import { Briefcase } from "../../Object/Briefcase";
+import { Banker } from "../../Object/Banker";
+import { Score } from "../../Object/Score";
+import { Player } from "../../Object/Player";
+import { GameActivity } from "../GameActivity";
+import { PlayerActivity } from "../PlayerActivity";
+import { BankerActivity } from "../BankerActivity";
 
 export class GameServiceImpl implements GameService {
     listBriefCase: Briefcase[];
@@ -23,9 +23,11 @@ export class GameServiceImpl implements GameService {
     gameActivity: GameActivity;
     playerActivity: PlayerActivity;
     bankerActivity: BankerActivity;
+    tt: GameService;
 
     constructor() {
         this.setup();
+        this.tt = this;
     }
 
     setup(): void {

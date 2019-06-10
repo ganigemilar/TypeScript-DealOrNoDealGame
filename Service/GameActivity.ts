@@ -2,5 +2,6 @@ export interface GameActivity {
     onSetup(): void;
     onStart(): void;
     onUpdate(): void;
-    onFinish(): void;   
+    onFinish(): void;
+    onInterrupt(): void;   
 }

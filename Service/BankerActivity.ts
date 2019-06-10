@@ -1,3 +1,5 @@
+import { Briefcase } from "../Object/Briefcase";
+
 export interface BankerActivity {
-    onOffering(): void;
+    onOffering(playerBriefcase: Briefcase, eliminateBriefcases: Briefcase[]): number;
 }
