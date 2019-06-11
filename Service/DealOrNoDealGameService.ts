@@ -24,7 +24,7 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     abstract onGivePlayerName(fullname?: string): string;
     abstract onChooseBriefcase(briefcaseNumber?: number): number;
     abstract onEliminateBriefcase(briefcaseNumber?: number): number;
-    abstract onSkipOfferingBanker(isAcceptOffering?: boolean): boolean;
+    abstract onMakeDecisionOfferingBanker(isAcceptOffering?: boolean): boolean;
     abstract onGetOfferingByBanker(offering: number): void;
 
     constructor() {
@@ -66,7 +66,7 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
 
         let bankerOffer = this.onOffering(this.playerBriefcase, choosedBriefcases);
         this.onGetOfferingByBanker(bankerOffer);
-        this.onSkipOfferingBanker();
+        this.onMakeDecisionOfferingBanker();
 
         this.onInterrupt();
 

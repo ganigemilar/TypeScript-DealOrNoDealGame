@@ -23,8 +23,8 @@ export class TestGame extends DealOrNoDealGameService {
         }
     }
     
-    onSkipOfferingBanker(isAcceptOffering?: boolean): boolean {
-        return true;
+    onMakeDecisionOfferingBanker(isAcceptOffering?: boolean): boolean {
+        return false;
     }
     
     onGetOfferingByBanker(offering: number): void {

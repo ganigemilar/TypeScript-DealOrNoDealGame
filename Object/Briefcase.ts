@@ -2,12 +2,12 @@ import { GameObject } from "./GameObject";
 
 export class Briefcase extends GameObject {
     id: number;
-    money: number;
+    money: bigint;
     isOpen: boolean = false;
 
-    constructor(id: number, money: number = 0) {
+    constructor(id: number, money: bigint) {
         super();
         this.id = id;
-        this.money = money;
+        this.money = 100n;
     }
 }

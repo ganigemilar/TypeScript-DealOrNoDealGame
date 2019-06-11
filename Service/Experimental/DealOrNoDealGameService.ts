@@ -12,7 +12,7 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     gameActivity: GameActivity;
 
     listBriefcases: Briefcase[] = [];
-    player: Player;    
+    player: Player;
     playerBriefcase: Briefcase;
     banker: Banker;
     score: Score;
@@ -51,7 +51,7 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     }
     
     onUpdate(): void {
-        this.printInfo();
+        this.printInfo(this.playerBriefcase);
         
         this.isOnPlaying = true;
 
@@ -66,28 +66,34 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
             choosedBriefcases.push(this.giveBriefcase(this.onEliminateBriefcase()));
         }
 
-        let bankerOffer = this.onOffering(this.playerBriefcase, choosedBriefcases);
-        this.onGetOfferingByBanker(bankerOffer);
-        this.onSkipOfferingBanker();
-
-        this.onInterrupt();
-
-        this.round++;
-        if (this.limitChoose - 1 > 0) {
-            this.limitChoose--;
+        if (choosedBriefcases.length > 1) {
+            let bankerOffer = this.onOffering(this.playerBriefcase, choosedBriefcases);
+            this.onGetOfferingByBanker(bankerOffer);
+            this.printInfo(bankerOffer);
+        }
+        
+        if (this.onMakeDecisionOfferingBanker()) {
+            this.onFinish();
         } else {
-            if (this.isLastRound) {
-                this.isOnPlaying = false;
-                this.onFinish();
+            this.round++;
+            if (this.limitChoose - 1 > 0) {
+                this.limitChoose--;
+            } else {
+                if (this.isLastRound) {
+                    this.isOnPlaying = false;
+                    this.onFinish();
+                }
+                this.isLastRound = true; 
             }
-            this.isLastRound = true; 
+
+            //this.gameActivity.onUpdate();
+
+            if (this.isOnPlaying) {
+                this.onUpdate();
+            }
         }
 
-        //this.gameActivity.onUpdate();
-
-        if (this.isOnPlaying) {
-            this.onUpdate();
-        }
+        //this.onInterrupt();
     }
     
     onFinish(): void {
@@ -100,12 +106,30 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
     abstract onGivePlayerName(fullname?: string): string;
     abstract onChooseBriefcase(briefcaseNumber?: number): number;
     abstract onEliminateBriefcase(briefcaseNumber?: number): number;
-    abstract onSkipOfferingBanker(isAcceptOffering?: boolean): boolean;
+    abstract onMakeDecisionOfferingBanker(isAcceptOffering?: boolean): boolean;
     abstract onGetOfferingByBanker(offering: number): void;
 
     //Banker Activity
     onOffering(playerBriefcase: Briefcase, eliminateBriefcases: Briefcase[]): number {
-        return 696969696969;
+        this.printInfo(eliminateBriefcases);
+        //Measure avarage
+        let avg: BigInteger;
+        for (let briefcase of eliminateBriefcases) {
+            //avg += (<Briefcase>briefcase).money;
+        }
+        //avg /= eliminateBriefcases.length;
+        this.printInfo(avg);
+
+        //Randomize percent offer
+        let percentOffer: number;
+        percentOffer = Math.floor(Math.random() * 15) + 1;
+
+        //Decision to added or reduce
+        if (avg >= playerBriefcase.money) {
+            percentOffer *= -1;
+        }
+
+        return Math.floor((percentOffer / 100) * playerBriefcase.money) + playerBriefcase.money;
     }
 
     private generateBriefcase(): void {
@@ -151,7 +175,7 @@ export abstract class DealOrNoDealGameService implements GameActivity, PlayerAct
         this.onStart();
     }
 
-    private printInfo(): void {
-        console.log(this);
+    private printInfo(obj: any): void {
+        console.log(obj);
     }
 }
